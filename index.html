@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Worship Songs</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose:    #f7c5d0;
+    --rose2:   #f2a0b5;
+    --rose3:   #e87a9a;
+    --lavender:#ddd0f0;
+    --lav2:    #c5b0e8;
+    --lav3:    #a882d4;
+    --peach:   #fde0c8;
+    --peach2:  #f9c49a;
+    --mint:    #c8edd8;
+    --mint2:   #9adbb8;
+    --sky:     #cce8f8;
+    --sky2:    #99cff0;
+    --cream:   #fdf6f0;
+    --white:   #ffffff;
+    --text:    #5a3e5c;
+    --text2:   #8a6a8c;
+    --text3:   #b89ab8;
+    --card-bg: #ffffff;
+    --nav-bg:  rgba(253,246,240,0.92);
+    --input-bg:#ffffff;
+  }
+  [data-theme="dark"] {
+    --cream:   #1a1220;
+    --white:   #241a2e;
+    --text:    #f0dff5;
+    --text2:   #c4a8d4;
+    --text3:   #8a6a9a;
+    --card-bg: #2a1e38;
+    --nav-bg:  rgba(26,18,32,0.95);
+    --input-bg:#2a1e38;
+    --rose:    #5a2a40;
+    --rose2:   #7a3a55;
+    --rose3:   #c06080;
+    --lavender:#3a2a55;
+    --lav2:    #5a4080;
+    --peach:   #4a2e1a;
+    --peach2:  #6a4020;
+    --mint:    #1a3a2a;
+    --mint2:   #2a5a3a;
+    --sky:     #1a2a4a;
+    --sky2:    #2a4070;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: none;
+    transition: background 0.4s, color 0.4s;
+  }
+
+  /* ── Floral Cursor ── */
+  #cursor-flower {
+    position: fixed; pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%); font-size: 22px;
+    transition: transform 0.1s;
+    filter: drop-shadow(0 0 4px rgba(232,122,154,0.5));
+    animation: cursorSpin 4s linear infinite;
+    will-change: left, top;
+  }
+  @keyframes cursorSpin {
+    0%   { filter: drop-shadow(0 0 4px rgba(232,122,154,0.6)) hue-rotate(0deg); }
+    100% { filter: drop-shadow(0 0 4px rgba(232,122,154,0.6)) hue-rotate(360deg); }
+  }
+  .cursor-petal {
+    position: fixed; pointer-events: none; z-index: 9997;
+    font-size: 14px; animation: petalBurst 0.9s ease-out forwards;
+    will-change: transform, opacity;
+  }
+  @keyframes petalBurst {
+    0%   { opacity:1; transform:translate(0,0) scale(1) rotate(0deg); }
+    100% { opacity:0; transform:translate(var(--tx),var(--ty)) scale(0.2) rotate(var(--tr)); }
+  }
+
+  /* ── Floating petal background ── */
+  .petal {
+    position: fixed; pointer-events: none; z-index: 0;
+    opacity: 0; animation: petalFall linear infinite; font-size: 18px;
+  }
+  @keyframes petalFall {
+    0%   { opacity:0; transform:translateY(-40px) rotate(0deg); }
+    10%  { opacity:0.6; }
+    90%  { opacity:0.4; }
+    100% { opacity:0; transform:translateY(110vh) rotate(720deg); }
+  }
+
+  /* ══════════════════════════════════
+     HOME PAGE
+  ══════════════════════════════════ */
+  #home-page {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; padding: 40px 20px;
+    position: relative; z-index: 1;
+  }
+  .home-icon {
+    font-size: 3rem; margin-bottom: 10px;
+    animation: floatIcon 3s ease-in-out infinite;
+  }
+  @keyframes floatIcon {
+    0%,100%{ transform:translateY(0) rotate(-3deg); }
+    50%    { transform:translateY(-10px) rotate(3deg); }
+  }
+  .home-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem,7vw,3.6rem);
+    color: var(--text); text-align: center; line-height: 1.1;
+    animation: fadeDown 0.8s ease both;
+  }
+  .home-title em { font-style: italic; color: var(--rose3); }
+  .home-sub {
+    color: var(--text2); font-size: 0.9rem; margin-top: 8px;
+    letter-spacing: 1px; font-weight: 300;
+    animation: fadeDown 0.8s 0.1s ease both;
+  }
+
+  /* Home section cards */
+  .home-cards {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 22px; max-width: 600px; width: 100%;
+    margin-top: 48px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+  @media(max-width:480px){ .home-cards{ grid-template-columns:1fr; } }
+
+  .home-card {
+    background: var(--card-bg); border-radius: 28px;
+    padding: 36px 24px; text-align: center; cursor: none;
+    border: 2px solid var(--rose);
+    box-shadow: 0 6px 28px rgba(180,120,160,0.12);
+    transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    position: relative; overflow: hidden;
+  }
+  .home-card::before {
+    content: ''; position: absolute; inset: 0; opacity: 0;
+    transition: opacity 0.3s; border-radius: 28px;
+  }
+  .home-card.english::before { background: linear-gradient(135deg,var(--sky),var(--lavender)); }
+  .home-card.tamil::before   { background: linear-gradient(135deg,var(--rose),var(--peach));  }
+  .home-card:hover { transform: translateY(-10px) scale(1.04); box-shadow: 0 20px 48px rgba(180,120,160,0.22); }
+  .home-card:hover::before   { opacity: 1; }
+  .home-card > * { position: relative; z-index: 1; }
+
+  .hc-emoji { font-size: 3rem; display: block; margin-bottom: 14px;
+    animation: floatIcon 3s ease-in-out infinite; }
+  .home-card.tamil .hc-emoji { animation-delay: 0.5s; }
+  .hc-title {
+    font-family: 'Playfair Display', serif; font-size: 1.45rem;
+    color: var(--text); margin-bottom: 6px; font-weight: 700;
+  }
+  .hc-sub { font-size: 0.78rem; color: var(--text2); font-weight: 300; }
+  .hc-count {
+    display: inline-block; margin-top: 14px;
+    background: rgba(247,197,208,0.4); border-radius: 20px;
+    padding: 4px 14px; font-size: 0.72rem; color: var(--text2); font-weight: 600;
+  }
+
+  /* ══════════════════════════════════
+     SONGS PAGE
+  ══════════════════════════════════ */
+  #songs-page { display: none; position: relative; z-index: 1; }
+
+  /* Nav */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 28px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    position: sticky; top: 0; z-index: 100;
+    border-bottom: 1.5px solid var(--rose);
+    animation: fadeDown 0.5s ease both;
+  }
+  .nav-back {
+    background: var(--rose); border: 2px solid var(--rose2);
+    border-radius: 20px; padding: 7px 18px;
+    font-size: 0.8rem; color: var(--text); font-weight: 700;
+    font-family: 'Nunito', sans-serif; cursor: none;
+    transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .nav-back:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 16px rgba(232,122,154,0.25); }
+  .nav-logo {
+    font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--text2);
+  }
+  .nav-badge {
+    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+    padding: 5px 16px; border-radius: 20px; font-weight: 700;
+  }
+  .nav-badge.english { background: var(--sky);  color: #1a4a7a; }
+  .nav-badge.tamil   { background: var(--mint); color: #1a5a3a; }
+
+  /* App layout */
+  .app {
+    position: relative; z-index: 1;
+    max-width: 960px; margin: 0 auto;
+    padding: 30px 24px 60px;
+  }
+
+  /* Header inside songs page */
+  .header { text-align:center; margin-bottom:24px; animation:fadeDown 0.8s ease both; }
+  .header-icon { font-size:2.4rem; display:block; margin-bottom:6px; animation:floatIcon 3s ease-in-out infinite; }
+  .header h1 { font-family:'Playfair Display',serif; font-size:2.4rem; color:var(--text); line-height:1.1; }
+  .header h1 em { font-style:italic; color:var(--rose3); }
+  .header p { color:var(--text2); font-size:0.88rem; margin-top:6px; font-weight:300; letter-spacing:1px; }
+
+  /* Verse of the day */
+  .verse-of-day {
+    background: linear-gradient(135deg,#fff5f7,#f8f2ff);
+    border: 2px solid var(--rose); border-radius: 24px;
+    padding: 24px 28px; margin-bottom: 28px; text-align: center;
+    animation: fadeUp 0.8s 0.1s ease both;
+    position: relative; overflow: hidden;
+  }
+  .verse-of-day::before {
+    content:'✝'; position:absolute; font-size:8rem;
+    color:var(--rose); opacity:0.08; top:-10px; right:10px; pointer-events:none;
+  }
+  .vod-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .vod-label { font-size:0.65rem; letter-spacing:3px; color:var(--rose3); text-transform:uppercase; font-weight:700; }
+  .vod-date  { font-size:0.7rem; color:var(--text3); font-weight:300; }
+  .vod-text  { font-family:'Playfair Display',serif; font-size:1.1rem; font-style:italic; color:var(--text); line-height:1.8; margin-bottom:12px; }
+  .vod-ref   { font-size:0.78rem; font-weight:700; color:var(--rose3); letter-spacing:1px; }
+
+  /* Search */
+  .search-wrap { position:relative; margin-bottom:24px; animation:fadeUp 0.8s 0.2s ease both; }
+  .search-input {
+    width:100%; padding:16px 52px 16px 22px;
+    border:2px solid var(--rose); border-radius:50px;
+    background:var(--input-bg); font-family:'Nunito',sans-serif;
+    font-size:1rem; color:var(--text); outline:none;
+    transition:border-color 0.3s,box-shadow 0.3s,background 0.4s;
+    box-shadow:0 4px 20px rgba(232,122,154,0.12);
+  }
+  .search-input:focus { border-color:var(--rose3); box-shadow:0 4px 30px rgba(232,122,154,0.25); }
+  .search-input::placeholder { color:var(--text3); }
+  .search-icon { position:absolute; right:20px; top:50%; transform:translateY(-50%); font-size:1.2rem; pointer-events:none; }
+
+  /* Mood filters */
+  .moods { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:28px; animation:fadeUp 0.8s 0.3s ease both; }
+  .mood-btn {
+    padding:8px 20px; border-radius:50px; border:2px solid transparent;
+    font-family:'Nunito',sans-serif; font-size:0.82rem; font-weight:600;
+    cursor:none; transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1); letter-spacing:0.5px;
+  }
+  .mood-btn:hover { transform:translateY(-3px) scale(1.05); }
+  .mood-btn.active { transform:translateY(-4px) scale(1.08); box-shadow:0 8px 24px rgba(0,0,0,0.12); }
+  .mood-btn[data-mood="All"]      { background:var(--rose);     color:var(--text);  border-color:var(--rose2);  }
+  .mood-btn[data-mood="Praise"]   { background:var(--peach);    color:#7a4a20;      border-color:var(--peach2); }
+  .mood-btn[data-mood="Worship"]  { background:var(--lavender); color:#4a2a7a;      border-color:var(--lav2);   }
+  .mood-btn[data-mood="Tamil"]    { background:var(--mint);     color:#1a5a3a;      border-color:var(--mint2);  }
+  .mood-btn[data-mood="Prayer"]   { background:var(--sky);      color:#1a4a7a;      border-color:var(--sky2);   }
+  .mood-btn[data-mood="Christmas"]{ background:#ffe0e0;         color:#7a2020;      border-color:#ffb0b0;       }
+
+  /* Content grid */
+  .content-grid { display:grid; grid-template-columns:1fr 1.4fr; gap:24px; align-items:start; }
+  @media(max-width:768px){
+    .content-grid { grid-template-columns:1fr; }
+    .app { padding:20px 16px 40px; }
+    .header h1 { font-size:2rem; }
+    .search-input { font-size:0.9rem; padding:13px 44px 13px 18px; }
+    .moods { gap:8px; }
+    .mood-btn { padding:6px 14px; font-size:0.75rem; }
+    .song-card { padding:12px 14px; }
+    .song-emoji { width:40px; height:40px; }
+    .song-name { font-size:0.85rem; }
+    .lyrics-panel { padding:20px 18px; border-radius:20px; }
+    .lyrics-title { font-size:1.2rem; }
+    .verse-text { font-size:0.85rem; }
+    .action-row { gap:8px; }
+    .action-btn { padding:8px 14px; font-size:0.72rem; }
+    nav { padding:14px 20px; }
+  }
+
+  /* Song list */
+  .song-list { display:flex; flex-direction:column; gap:12px; animation:fadeUp 0.8s 0.4s ease both; }
+  .song-card {
+    background:var(--card-bg); border-radius:20px; padding:14px 16px;
+    display:flex; align-items:center; gap:14px; cursor:none;
+    border:2px solid transparent;
+    transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow:0 4px 16px rgba(180,120,160,0.08);
+    position:relative; overflow:hidden;
+  }
+  .song-card::before {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(135deg,rgba(247,197,208,0.2),rgba(221,208,240,0.2));
+    opacity:0; transition:opacity 0.3s;
+  }
+  .song-card:hover::before { opacity:1; }
+  .song-card:hover { transform:translateY(-4px) rotateX(2deg); box-shadow:0 12px 32px rgba(180,120,160,0.18); }
+  .song-card.active { border-color:var(--rose2); background:linear-gradient(135deg,#fff5f7,#f8f2ff); box-shadow:0 8px 28px rgba(232,122,154,0.2); transform:translateY(-2px); }
+  .song-emoji { width:48px; height:48px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0; transition:transform 0.3s; }
+  .song-card:hover .song-emoji { transform:rotate(10deg) scale(1.1); }
+  .song-info { flex:1; min-width:0; }
+  .song-name { font-weight:700; font-size:0.9rem; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:2px; }
+  .song-artist { font-size:0.75rem; color:var(--text2); font-weight:300; }
+  .song-tag { font-size:0.68rem; padding:3px 10px; border-radius:20px; font-weight:600; white-space:nowrap; flex-shrink:0; }
+
+  /* Lyrics panel */
+  .lyrics-panel {
+    background:var(--card-bg); border-radius:28px; padding:28px;
+    box-shadow:0 8px 40px rgba(180,120,160,0.12);
+    border:2px solid var(--rose);
+    animation:fadeUp 0.8s 0.5s ease both;
+    position:relative; overflow:hidden;
+    transform-style:preserve-3d; transition:transform 0.4s, background 0.4s;
+  }
+  .lyrics-panel::before {
+    content:''; position:absolute; top:-60px; right:-60px;
+    width:180px; height:180px;
+    background:radial-gradient(circle,var(--rose) 0%,transparent 70%);
+    opacity:0.3; pointer-events:none;
+  }
+  .lyrics-panel::after {
+    content:''; position:absolute; bottom:-60px; left:-40px;
+    width:160px; height:160px;
+    background:radial-gradient(circle,var(--lavender) 0%,transparent 70%);
+    opacity:0.4; pointer-events:none;
+  }
+  .lyrics-top { display:flex; align-items:flex-start; gap:14px; margin-bottom:20px; position:relative; z-index:1; }
+  .lyrics-art { width:64px; height:64px; border-radius:18px; display:flex; align-items:center; justify-content:center; font-size:2rem; flex-shrink:0; animation:floatIcon 3s ease-in-out infinite; box-shadow:0 6px 20px rgba(0,0,0,0.1); }
+  .lyrics-meta { flex:1; }
+  .lyrics-title { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:var(--text); line-height:1.2; margin-bottom:4px; }
+  .lyrics-sub { font-size:0.78rem; color:var(--text2); font-weight:300; }
+  .lyrics-divider { height:1px; background:linear-gradient(90deg,var(--rose2),var(--lav2),transparent); margin:0 0 20px; position:relative; z-index:1; }
+  .verse-section { position:relative; z-index:1; margin-bottom:20px; }
+  .verse-label {
+    font-size:0.65rem; font-weight:700; letter-spacing:2px;
+    text-transform:uppercase; color:var(--rose3); margin-bottom:8px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .verse-label::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,var(--rose),transparent); }
+  .verse-text { font-size:0.9rem; line-height:2; color:var(--text); font-style:italic; font-family:'Playfair Display',serif; white-space:pre-line; }
+
+  /* Action buttons */
+  .action-row { display:flex; gap:10px; flex-wrap:wrap; position:relative; z-index:1; margin-top:20px; }
+  .action-btn {
+    padding:9px 18px; border-radius:50px; border:2px solid transparent;
+    font-family:'Nunito',sans-serif; font-size:0.78rem; font-weight:700; cursor:none;
+    transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    display:flex; align-items:center; gap:6px;
+  }
+  .action-btn:hover { transform:translateY(-3px) scale(1.05); }
+  .btn-play  { background:var(--mint);     color:#1a5a3a; border-color:var(--mint2); }
+  .btn-play.playing { background:var(--rose); color:#7a2a4a; border-color:var(--rose2); }
+  .btn-copy  { background:var(--rose);     color:var(--text); border-color:var(--rose2); }
+  .btn-share { background:var(--lavender); color:#4a2a7a; border-color:var(--lav2); }
+  .btn-fav   { background:var(--peach);    color:#7a4a20; border-color:var(--peach2); }
+
+  /* No results */
+  .no-results { text-align:center; padding:40px 20px; color:var(--text2); font-style:italic; display:none; }
+  .no-results.show { display:block; }
+
+  /* Toast */
+  .toast {
+    position:fixed; bottom:30px; left:50%;
+    transform:translateX(-50%) translateY(80px);
+    background:linear-gradient(135deg,var(--rose2),var(--lav2));
+    color:white; padding:12px 28px; border-radius:50px;
+    font-weight:600; font-size:0.85rem; z-index:1000;
+    transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow:0 8px 24px rgba(180,120,160,0.3); pointer-events:none;
+  }
+  .toast.show { transform:translateX(-50%) translateY(0); }
+
+  /* ── Theme Toggle ── */
+  .theme-toggle {
+    position: fixed; bottom: 24px; right: 24px; z-index: 200;
+    background: var(--card-bg); border: 2px solid var(--rose2);
+    border-radius: 50px; padding: 7px 16px; cursor: none;
+    font-size: 0.82rem; font-weight: 700; color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow: 0 4px 16px rgba(180,120,160,0.15);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .theme-toggle:hover { transform: translateY(-2px) scale(1.05); }
+
+  /* ── Bilingual Verse ── */
+  .verse-bilingual {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin: 10px 0;
+  }
+  @media(max-width:600px){ .verse-bilingual{ grid-template-columns:1fr; } }
+  .vod-lang-block { padding: 12px 14px; border-radius: 14px; }
+  .vod-lang-block.english-block {
+    background: rgba(200,232,248,0.25); border: 1px solid var(--sky2);
+  }
+  .vod-lang-block.tamil-block {
+    background: rgba(247,197,208,0.2); border: 1px solid var(--rose2);
+  }
+  .vod-lang-label {
+    font-size: 0.58rem; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--text3); margin-bottom: 6px;
+  }
+  .vod-lang-text {
+    font-family: 'Playfair Display', serif; font-size: 0.88rem;
+    font-style: italic; color: var(--text); line-height: 1.7;
+  }
+  .vod-lang-ref {
+    font-size: 0.7rem; font-weight: 700; color: var(--rose3);
+    margin-top: 6px; letter-spacing: 1px;
+  }
+  [data-theme="dark"] .vod-lang-block.english-block {
+    background: rgba(99,160,200,0.15); border-color: #4a7aaa;
+  }
+  [data-theme="dark"] .vod-lang-block.tamil-block {
+    background: rgba(200,100,130,0.15); border-color: #8a4060;
+  }
+  [data-theme="dark"] .verse-of-day {
+    background: linear-gradient(135deg,#1e1428,#221830);
+    border-color: #5a3a50;
+  }
+  [data-theme="dark"] .vod-lang-text { color: #f0dff5; }
+  [data-theme="dark"] .vod-date { color: #c4a8d4; }
+  [data-theme="dark"] .vod-label { color: #e87a9a; }
+
+  /* ── Prayer Journal ── */
+  #prayer-page {
+    display: none; position: relative; z-index: 1;
+    min-height: 100vh;
+  }
+  .prayer-app {
+    max-width: 760px; margin: 0 auto; padding: 30px 24px 80px;
+  }
+  .prayer-header { text-align: center; margin-bottom: 28px; }
+  .prayer-header h2 {
+    font-family: 'Playfair Display', serif; font-size: 2rem;
+    color: var(--text); margin-bottom: 6px;
+  }
+  .prayer-header h2 em { font-style: italic; color: var(--rose3); }
+  .prayer-header p { color: var(--text2); font-size: 0.85rem; font-weight: 300; }
+
+  .prayer-write-area {
+    background: var(--card-bg); border-radius: 24px; padding: 24px;
+    border: 2px solid var(--rose); margin-bottom: 24px;
+    box-shadow: 0 6px 28px rgba(180,120,160,0.1);
+  }
+  .prayer-write-area label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--rose3); display: block; margin-bottom: 10px;
+  }
+  .prayer-title-input {
+    width: 100%; padding: 12px 16px; border: 2px solid var(--rose);
+    border-radius: 14px; font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem; color: var(--text); background: var(--input-bg);
+    outline: none; margin-bottom: 12px;
+    transition: border-color 0.3s;
+  }
+  .prayer-title-input:focus { border-color: var(--rose3); }
+  .prayer-textarea {
+    width: 100%; min-height: 120px; padding: 14px 16px;
+    border: 2px solid var(--rose); border-radius: 14px;
+    font-family: 'Nunito', sans-serif; font-size: 0.92rem;
+    color: var(--text); background: var(--input-bg); outline: none;
+    resize: vertical; line-height: 1.7;
+    transition: border-color 0.3s;
+  }
+  .prayer-textarea:focus { border-color: var(--rose3); }
+  .prayer-textarea::placeholder, .prayer-title-input::placeholder { color: var(--text3); }
+  .prayer-save-btn {
+    margin-top: 14px; padding: 11px 28px; border-radius: 50px;
+    background: linear-gradient(135deg, var(--rose2), var(--lav2));
+    color: white; font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem; font-weight: 700; cursor: none; border: none;
+    transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow: 0 4px 18px rgba(180,120,160,0.25);
+  }
+  .prayer-save-btn:hover { transform: translateY(-3px) scale(1.05); }
+
+  .prayers-list { display: flex; flex-direction: column; gap: 14px; }
+  .prayer-entry {
+    background: var(--card-bg); border-radius: 20px; padding: 18px 20px;
+    border: 2px solid var(--rose); position: relative;
+    box-shadow: 0 4px 16px rgba(180,120,160,0.08);
+    animation: fadeUp 0.4s ease both;
+  }
+  .prayer-entry-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 8px;
+  }
+  .prayer-entry-title {
+    font-family: 'Playfair Display', serif; font-size: 1rem;
+    font-weight: 700; color: var(--text);
+  }
+  .prayer-entry-date { font-size: 0.68rem; color: var(--text3); font-weight: 300; }
+  .prayer-entry-body { font-size: 0.88rem; color: var(--text2); line-height: 1.7; white-space: pre-line; }
+  .prayer-delete-btn {
+    background: none; border: none; font-size: 1rem; cursor: none;
+    opacity: 0.4; transition: opacity 0.2s; padding: 4px;
+  }
+  .prayer-delete-btn:hover { opacity: 1; }
+  .prayer-empty {
+    text-align: center; padding: 40px 20px;
+    color: var(--text3); font-style: italic; font-family: 'Playfair Display', serif;
+  }
+
+  /* Home page bottom nav buttons */
+  .home-bottom-nav {
+    display: flex; gap: 14px; margin-top: 28px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .home-nav-btn {
+    padding: 10px 22px; border-radius: 50px;
+    border: 2px solid var(--rose2); background: var(--card-bg);
+    font-family: 'Nunito', sans-serif; font-size: 0.82rem; font-weight: 700;
+    color: var(--text); cursor: none;
+    transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .home-nav-btn:hover { transform: translateY(-3px) scale(1.05); background: var(--rose); }
+
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeUp   { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:translateY(0)} }
+</style>
+</head>
+<body>
+
+<div id="cursor-flower">🌸</div>
+<div class="toast" id="toast"></div>
+<div id="petals"></div>
+
+<!-- Theme Toggle -->
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙 Dark</button>
+
+
+<!-- ══ HOME PAGE ══ -->
+<div id="home-page">
+  <span class="home-icon">🕊️</span>
+  <h1 class="home-title">Worship <em>Songs</em></h1>
+  <p class="home-sub">✦ search · sing · praise Him ✦</p>
+
+  <div class="home-cards">
+    <div class="home-card english" onclick="openSection('english')">
+      <span class="hc-emoji">🎵</span>
+      <div class="hc-title">English Songs</div>
+      <div class="hc-sub">Classic & contemporary worship</div>
+      <span class="hc-count" id="englishCount">9 songs</span>
+    </div>
+    <div class="home-card tamil" onclick="openSection('tamil')">
+      <span class="hc-emoji">🌺</span>
+      <div class="hc-title">Tamil Songs</div>
+      <div class="hc-sub">தமிழ் கிறிஸ்தவ பாடல்கள்</div>
+      <span class="hc-count" id="tamilCount">6 songs</span>
+    </div>
+  </div>
+
+  <div class="home-bottom-nav">
+    <button class="home-nav-btn" onclick="openPrayer()">🙏 Prayer Journal</button>
+  </div>
+</div>
+
+<!-- ══ PRAYER PAGE ══ -->
+<div id="prayer-page">
+  <nav>
+    <button class="nav-back" onclick="goHome()">← Home</button>
+    <span class="nav-logo">✝️ Worship Songs</span>
+    <span class="nav-badge" style="background:var(--lavender);color:#4a2a7a;">🙏 Prayer</span>
+  </nav>
+  <div class="prayer-app">
+    <div class="prayer-header">
+      <h2>My <em>Prayer</em> Journal</h2>
+      <p>✦ pour your heart out to Him ✦</p>
+    </div>
+
+    <div class="prayer-write-area">
+      <label>✦ New Prayer Entry</label>
+      <input type="text" class="prayer-title-input" id="prayerTitle" placeholder="Give your prayer a title... (e.g. For my family)" />
+      <textarea class="prayer-textarea" id="prayerText" placeholder="Write your prayer here... He hears every word. 🙏"></textarea>
+      <button class="prayer-save-btn" onclick="savePrayer()">🌸 Save Prayer</button>
+    </div>
+
+    <div class="prayers-list" id="prayersList"></div>
+  </div>
+</div>
+
+<!-- ══ SONGS PAGE ══ -->
+<div id="songs-page">
+  <nav>
+    <button class="nav-back" onclick="goHome()">← Home</button>
+    <span class="nav-logo">✝️ Worship Songs</span>
+    <span class="nav-badge" id="navBadge">English</span>
+  </nav>
+
+  <div class="app">
+
+    <!-- Verse of Day -->
+    <div class="verse-of-day" id="verseCard">
+      <div class="vod-top">
+        <span class="vod-label">✦ Verse of the Day</span>
+        <span class="vod-date" id="verseDate"></span>
+      </div>
+      <div class="verse-bilingual">
+        <div class="vod-lang-block english-block">
+          <div class="vod-lang-label">🎵 English</div>
+          <div class="vod-lang-text" id="verseText"></div>
+          <div class="vod-lang-ref"  id="verseRef"></div>
+        </div>
+        <div class="vod-lang-block tamil-block">
+          <div class="vod-lang-label">🌺 தமிழ்</div>
+          <div class="vod-lang-text" id="verseTamilText"></div>
+          <div class="vod-lang-ref"  id="verseTamilRef"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="search-wrap">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search songs, lyrics, or artists..." />
+      <span class="search-icon">🌸</span>
+    </div>
+
+    <!-- Mood filters (built dynamically) -->
+    <div class="moods" id="moodFilters"></div>
+
+    <!-- Content -->
+    <div class="content-grid">
+      <div>
+        <div class="song-list" id="songList"></div>
+        <div class="no-results" id="noResults">🌸 No songs found... try another search!</div>
+      </div>
+
+      <!-- Lyrics panel -->
+      <div class="lyrics-panel" id="lyricsPanel">
+        <div class="lyrics-top">
+          <div class="lyrics-art" id="lyricsArt">🌸</div>
+          <div class="lyrics-meta">
+            <div class="lyrics-title" id="lyricsTitle">Select a song</div>
+            <div class="lyrics-sub"  id="lyricsSub">Choose from the list</div>
+          </div>
+        </div>
+        <div class="lyrics-divider"></div>
+        <div id="lyricsBody"><p style="color:var(--text3);font-style:italic;font-family:'Playfair Display',serif;text-align:center;padding:20px 0">🌸 Click any song to see its lyrics</p></div>
+        <div class="action-row">
+          <button class="action-btn btn-play"  id="playBtn">▶️ Play Song</button>
+          <button class="action-btn btn-copy"  id="copyBtn">🌸 Copy Lyrics</button>
+          <button class="action-btn btn-share" id="shareBtn">💌 Share</button>
+          <button class="action-btn btn-fav"   id="favBtn">🤍 Favourite</button>
+        </div>
+        <div id="yt-player-wrap" style="position:fixed;bottom:-9999px;left:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
+          <iframe id="yt-player" width="1" height="1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// SONG DATA
+// ══════════════════════════════════════════════════════════════
+
+const englishSongs = [
+  {
+    id:0, name:"Living Hope", artist:"Nations of Worship", tag:"Worship",
+    emoji:"🕊️", bg:"#fff0f4", tagStyle:"background:#f7c5d0;color:#7a2a4a;",
+    youtube:"2iLvcgh51yM",
+    verses:[
+      {label:"Verse 1", text:"How great the chasm\nThat lay between us\nHow high the mountain\nI could not climb\nIn desperation I turned to Heaven\nAnd spoke Your name into the night"},
+      {label:"Chorus",  text:"Then through the darkness\nYour loving kindness\nTore through the shadows of my soul\nThe work is ﬁnished the end is written\nJesus Christ my living hope"},
+      {label:"Verse 2", text:"Who could imagine so great a mercy\nWhat heart could fathom such boundless grace\nThe God of ages stepped down from glory\nTo wear my sin and bear my shame"},
+      {label:"Chorus",  text:"The cross has spoken\nI am forgiven\nThe King of kings calls me His own\nBeautiful Savior\nI'm yours forever\nJesus Christ my living hope"},
+      {label:"Verse 3", text:"Then came the morning that sealed the promise\nYour buried body began to breathe\nOut of the silence the roaring lion\nDeclared the grave has no claim on me"},
+      {label:"Tag",     text:"Jesus Yours is the victory\nJesus Christ my living hope\nMy God You are my living hope"}
+    ]
+  },
+  {
+    id:1, name:"Why Do I Love God", artist:"Josh Thomas", tag:"Worship",
+    emoji:"🌟", bg:"#fff8f0", tagStyle:"background:#fde0c8;color:#7a4a20;",
+    youtube:"__8EPrWLMwo",
+    verses:[
+      {label:"Chorus", text:"Cause when He loves me I feel like I'm floating\nWhen He calls me chosen I feel like somebody with purpose\nHe changed me I’m a new creation\nHe will always be my favorite form of loving"},
+      {label:"Verse 1",  text:"I don’t wanna live the way they do\nlife is so much better cause of You\nEven when I’m feeling bad and bruised\nYou give me strength to make it through"},
+      {label:"Chorus", text:"Cause when He loves me I feel like I'm floating\nWhen He calls me chosen I feel like somebody with purpose\nHe changed me I’m a new creation\nHe will always be my favorite form of loving"},
+      {label:"Verse 2", text:"When I trip and stumble through the night\nYou pick me up and hold me tight\nEven when I feel no hope inside\nLord, you bring me back to life"},
+      {label:"Chorus", text:"Cause when He loves me I feel like I'm floating\nWhen He calls me chosen I feel like somebody with purpose\nHe changed me I’m a new creation\nHe will always be my favorite form of loving"},
+
+    ]
+  },
+  {
+    id:2, name:"10,000 Reasons", artist:"Matt Redman", tag:"Praise",
+    emoji:"🌻", bg:"#fffaf0", tagStyle:"background:#fde0c8;color:#7a4a20;",
+    youtube:"XtwIT8JjddM",
+    verses:[
+      {label:"Chorus",  text:"Bless the Lord, oh my soul\nOh my soul, worship His holy name\nSing like never before, oh my soul\nI'll worship Your holy name"},
+      {label:"Verse 1", text:"The sun comes up, it's a new day dawning\nIt's time to sing Your song again\nWhatever may pass and whatever lies before me\nLet me be singing when the evening comes"},
+      {label:"Verse 2", text:"You're rich in love and You're slow to anger\nYour name is great and Your heart is kind\nFor all Your goodness I will keep on singing\nTen thousand reasons for my heart to find"}
+    ]
+  },
+  {
+    id:3, name:"Oceans (Where Feet May Fail)", artist:"Hillsong UNITED", tag:"Worship",
+    emoji:"🌊", bg:"#f0f8ff", tagStyle:"background:#ddd0f0;color:#4a2a7a;",
+    youtube:"6GGFb6LcX3U",
+    verses:[
+      {label:"Verse 1", text:"You call me out upon the waters\nThe great unknown where feet may fail\nAnd there I find You in the mystery\nIn oceans deep, my faith will stand"},
+      {label:"Chorus",  text:"And I will call upon Your name\nAnd keep my eyes above the waves\nWhen oceans rise, my soul will rest in Your embrace\nFor I am Yours and You are mine"},
+      {label:"Bridge",  text:"Spirit lead me where my trust is without borders\nLet me walk upon the waters\nWherever You would call me\nTake me deeper than my feet could ever wander"}
+    ]
+  },
+  {
+    id:4, name:"O Holy Night", artist:"Adolphe Adam", tag:"Christmas",
+    emoji:"⭐", bg:"#fff0f0", tagStyle:"background:#ffe0e0;color:#7a2020;",
+    youtube:"npBI-RDuR38",
+    verses:[
+      {label:"Verse 1", text:"O holy night, the stars are brightly shining\nIt is the night of our dear Savior's birth\nLong lay the world in sin and error pining\nTill He appeared and the soul felt its worth"},
+      {label:"Chorus",  text:"Fall on your knees, oh hear the angel voices\nO night divine, oh night when Christ was born\nO night, O holy night, O night divine"}
+    ]
+  },
+  {
+    id:5, name:"What a Beautiful Name", artist:"Hillsong Worship", tag:"Worship",
+    emoji:"💜", bg:"#f8f0ff", tagStyle:"background:#ddd0f0;color:#4a2a7a;",
+    youtube:"r5L6QlAH3L4",
+    verses:[
+      {label:"Verse 1", text:"You were the Word at the beginning\nOne with God the Lord Most High\nYour hidden glory in creation\nNow revealed in You our Christ"},
+      {label:"Chorus",  text:"What a beautiful name it is\nWhat a beautiful name it is\nThe name of Jesus Christ my King\nWhat a beautiful name it is\nNothing compares to this\nWhat a beautiful name it is\nThe name of Jesus"},
+      {label:"Bridge",  text:"Death could not hold You\nThe veil tore before You\nYou silenced the boast of sin and grave\nThe heavens are roaring\nThe praise of Your glory\nFor You are raised to life again"}
+    ]
+  },
+  {
+    id:6, name:"My Defender", artist:"Tate Butts", tag:"Prayer",
+    emoji:"🙏", bg:"#f0f8ff", tagStyle:"background:#cce8f8;color:#1a4a7a;",
+    youtube:"cLsP-36UESk",
+    verses:[
+      {label:"Verse 1", text:"The devil thought he had me\nbut Jesus had my soul\nHe’s the one who has control\nSends down an army to stand by my side\nHe lights up the path\nand he shows right from wrong\nAnd he guides me all along\nHe is the way, he’s the truth, he’s the life"},
+      {label:"Chorus",  text:"When I’m walking through darkness\nI know in my heart that\nGod is the name that I know\nThe Lord is my shepherd yeah he’s my defender Yahweh\nHe is great, he is strong, he is mighty\nYeah that’s my God\nI can hear him, he’s talking to me\nhe said praise in the valley\nWith my hands to the heavens, I will rejoice and I’ll sing "},
+      {label:"Verse 2", text:"He leads by still-water when life’s like a wave\nHe’s the one who always saves\nAlways remember put faith over fear (faith over fear)"},
+      {label:"Chorus",  text:"When I’m walking through darkness\nI know in my heart that\nGod is the name that I know\nThe Lord is my shepherd yeah he’s my defender Yahweh\nHe is great, he is strong, he is mighty\nYeah that’s my God\nI can hear him, he’s talking to me\nhe said praise in the valley\nWith my hands to the heavens, I will rejoice and I’ll sing "},
+      {label:"Verse 3", text:"Glory, Glory on high you are\nWorthy, now and all time you are\nHoly, God now and forever - 2"},
+      {label:"Chorus",  text:"When I’m walking through darkness\nI know in my heart that\nGod is the name that I know\nThe Lord is my shepherd yeah he’s my defender Yahweh\nHe is great, he is strong, he is mighty\nYeah that’s my God\nI can hear him, he’s talking to me\nhe said praise in the valley\nWith my hands to the heavens, I will rejoice and I’ll sing "},
+      {label:"Tag",     text:"My defender, my defender\nYahweh - 2"}
+    ]
+  }
+];
+
+const tamilSongs = [
+  {
+    id:100, name:"வானாதி வானங்கள்", artist:"Sis. Princy Leo Rakesh", tag:"Tamil",
+    emoji:"🌸", bg:"#fff0f4", tagStyle:"background:#f7c5d0;color:#7a2a4a;",
+    youtube:"",
+    verses:[
+      {label:"பல்லவி", text:"வானாதி வானங்கள் கொள்ளாதவரே\nவார்த்தையால் வர்ணிக்க கூடாதவரே\nஓயாமல் உம் புகழ் நான் பாடுவேன்\nஇன்றுமே என்றுமே என்றென்றுமே"},
+      {label:"அல்லேலூயா", text:"அல்லேலூயா அல்லேலூயா ஆமென்\nஅல்லேலூயா அல்லேலூயா ஆமென்"},
+      {label:"சரணம் 1", text:"பரலோக கவனத்தை ஈர்க்க வேண்டுமே\nஅப்பா உம் கண்களில் கிருபை வேண்டுமே\nஎப்போதும் என் அருகே நீர் வேண்டுமே\nநீர் வேண்டும் நீர் வேண்டும் நீர் வேண்டுமே"},
+      {label:"சரணம் 2", text:"விலகாத பிரியாத உம் சமூகமே\nஅது தானே நிரந்தர சுதந்திரமே\nவேறொன்றும் வேண்டாம் நீர் போதுமே\nநீர் போதும் எப்போதும் நீர் போதுமே"}
+    ]
+  },
+  {
+    id:101, name:"சிறகுகளின் நிழலில்", artist:"Joseph Aldrin", tag:"Tamil",
+    emoji:"🦋", bg:"#f0fff8", tagStyle:"background:#c8edd8;color:#1a5a3a;",
+    youtube:"",
+    verses:[
+      {label:"பல்லவி", text:"சிறகுகளின் நிழல்தனிலே நான் நம்பி இளைப்பாறுவேன்\nநீர் துணையாய் இருப்பதனால் நான் என்றும் இளைப்பாறுவேன்"},
+      {label:"சரணம் 1", text:"கண்மணி போல என்னை காப்பவரை நான் நம்பி இளைப்பாறுவேன்\nகண் உறங்காமல் காப்பவரை நான் நம்பி இளைப்பாறுவேன்"},
+      {label:"கோரஸ்", text:"மறைவிடமே ஆராதனை\nஉறைவிடமே உமக்கு ஆராதனை\nஅடைக்கலமே ஆராதனை\nபுகலிடமே உமக்கு ஆராதனை\nஆராதனை உமக்கு ஆராதனை\nஎன்னை நேசிக்கும் இயேசுவே ஆராதனை"},
+      {label:"சரணம் 2", text:"பக்கத்தில் ஆயிரம் பேர் விழுந்தாலும் என்னை அணுகாமல் காப்பவரே\nவலபக்கத்தில் பதினாயிரம் விழுந்தாலும் என்னை அணுகாமல் காப்பவரே"},
+      {label:"சரணம் 3", text:"இச்சகம் பேசிடும் நாவுகள் முன்னிலே என்னை காப்பவரே\nநன்மைக்கு கைமாறாய் தீமை செய்வோர் மத்தியில் என்னை காப்பவரே"}
+    ]
+  },
+  {
+    id:102, name:"என்னை அழைத்தவரே", artist:"Davidsam Joyson", tag:"Tamil",
+    emoji:"🌷", bg:"#fff5f0", tagStyle:"background:#f7c5d0;color:#7a2a4a;",
+    youtube:"",
+    verses:[
+      {label:"பல்லவி", text:"என்னை அழைத்தவரே என்றும் நடத்துவீரே\nஉங்க கரம் இருக்க பயமில்லையே\nஎந்த பாதையையும் தாண்டிடுவேன்\nஎந்த சூழ்நிலையும் மேற்கொள்ளுவேன்\nஉங்க கரம் இருக்க பயமில்லையே"},
+      {label:"சரணம் 1", text:"கருவிலே என்னை கண்டவரே\nபெயர்சொல்லி என்னை அழைத்தவரே\nநன்மைகள் எனக்காய் செய்பவரே\nவழுவாமல் என்னை காத்தவரே\nஇனிமேலும் என்னை காப்பவரே"},
+      {label:"சரணம் 2", text:"புல்லுள்ள இடங்களில் மேய்த்திடுவீர்\nஅமர்ந்த தண்ணீரண்டை நடத்திடுவீர்\nமரணத்தின் பள்ளத்தாக்கு சூழ்ந்திட்டாலும்\nவாக்கென்னும் கோலினால் பெலப்படுத்தி\nஎனக்கான நன்மையை காண செய்வீர்"}
+    ]
+  },
+  {
+    id:103, name:"ஆவியானவர்", artist:"Sam Prasad", tag:"Tamil",
+    emoji:"🕊️", bg:"#f0f4ff", tagStyle:"background:#c8edd8;color:#1a5a3a;",
+    youtube:"",
+    verses:[
+      {label:"பல்லவி", text:"ஆவியானவர் என்னில் இருப்பதால்\nகுறைகள் இல்லையே எல்லாம் நிறைவே\nஞானமும் நிறைவும் ஆலோசணை பெலனும்\nஅறிவையும் தேவபயத்தை தாரும்"},
+      {label:"சரணம் 1", text:"வெறுமையான பாத்திரமாய் உந்தனின் ஊழியத்தை\nஎப்படி செய்வேன்\nஎன்னை நிரப்பும் இன்றே\nபயன்படுத்தும் இன்றே\nபயனுள்ள பாத்திரமாக"},
+      {label:"சரணம் 2", text:"மீன்கலத்திரை வலையை நானும்\nஎத்தனை நாள் ஐயோ அலைவேன் நான்\nஎன்னை நிரப்பும் இன்றே\nபயன்படுத்தும் இன்றே\nபயனுள்ள பாத்திரமாக"},
+      {label:"சரணம் 3", text:"ஸ்தேவானை போல் தைரியமாய்\nஉந்தனின் ஆவி இன்றி எப்படி நிற்பேன்\nஎன்னை நிரப்பும் இன்றே\nபயன்படுத்தும் இன்றே\nபயனுள்ள பாத்திரமாக"}
+    ]
+  },
+  {
+    id:104, name:"இனியும் உம்மை கேட்பேன்", artist:"Johnsam Joyson", tag:"Tamil",
+    emoji:"🌹", bg:"#fff0f4", tagStyle:"background:#f7c5d0;color:#7a2a4a;",
+    youtube:"",
+    verses:[
+      {label:"பல்லவி", text:"இனியும் உம்மை கேட்பேன்\nநீர் சொல்வதை நான் செய்வேன்\nென் கூட பேசுங்கப்பா\nபேசாம மட்டும் இருக்காதீங்கப்பா"},
+      {label:"சரணம் 1", text:"நீர் பேசாவிட்டால் நான் உடைந்து போவேன்\nஉருக்குலைந்து போவேன்\nென் கூட பேசுங்கப்பா\nபேசாம மட்டும் இருக்காதீங்கப்பா"},
+      {label:"சரணம் 2", text:"நீர் பேசாவிட்டால் நான் தளர்ந்துபோவேன்\nதள்ளாடிப்போவேன்\nென்கூட பேசுங்கப்பா\nபேசாம மட்டும் இருக்காதீங்கப்பா"}
+    ]
+  },
+  {
+    id:105, name:"யாக்கோபின் தேவன்", artist:"Johnsam Joyson", tag:"Tamil",
+    emoji:"💜", bg:"#f5f0ff", tagStyle:"background:#ddd0f0;color:#4a2a7a;",
+    youtube:"",
+    verses:[
+      {label:"பல்லவி", text:"யாக்கோபின் தேவன் என் தேவன்\nஎனக்கென்றும் துணை அவரே\nஎந்நாளும் நடத்துவாரே"},
+      {label:"சரணம் 1", text:"ஏதுமில்லை என்ற கவலை இல்லை\nதுணையாளர் என்னை விட்டு விலகவில்லை\nசொன்னதை செய்திடும் தகப்பன் அவர்\nநம்புவேன் இறுதி வரை"},
+      {label:"சரணம் 2", text:"என் ஓட்டத்தில் நான் தனிமை இல்லை\nநேசித்தவர் என்னை வெறுக்கவில்லை\nதகப்பன் வீட்டில் கொண்டு சேர்த்திடுவார்\nநம்புவேன் இறுதி வரை"}
+    ]
+  }
+];
+
+// ══════════════════════════════════════════════════════════════
+// DAILY VERSE
+// ══════════════════════════════════════════════════════════════
+const verses = [
+  {text:"For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.", ref:"John 3:16"},
+  {text:"I can do all this through him who gives me strength.", ref:"Philippians 4:13"},
+  {text:"The Lord is my shepherd, I lack nothing.", ref:"Psalm 23:1"},
+  {text:"Trust in the Lord with all your heart and lean not on your own understanding.", ref:"Proverbs 3:5"},
+  {text:"Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.", ref:"Joshua 1:9"},
+  {text:"For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.", ref:"Jeremiah 29:11"},
+  {text:"Cast all your anxiety on him because he cares for you.", ref:"1 Peter 5:7"},
+  {text:"And we know that in all things God works for the good of those who love him.", ref:"Romans 8:28"},
+  {text:"The Lord your God is with you, the Mighty Warrior who saves.", ref:"Zephaniah 3:17"},
+  {text:"Give thanks to the Lord, for he is good; his love endures forever.", ref:"Psalm 107:1"},
+  {text:"But those who hope in the Lord will renew their strength. They will soar on wings like eagles.", ref:"Isaiah 40:31"},
+  {text:"The Lord is close to the brokenhearted and saves those who are crushed in spirit.", ref:"Psalm 34:18"},
+  {text:"Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God.", ref:"Philippians 4:6"},
+  {text:"Love is patient, love is kind. It does not envy, it does not boast, it is not proud.", ref:"1 Corinthians 13:4"},
+  {text:"Jesus said to her, I am the resurrection and the life.", ref:"John 11:25"},
+  {text:"Come to me, all you who are weary and burdened, and I will give you rest.", ref:"Matthew 11:28"},
+  {text:"Delight yourself in the Lord and he will give you the desires of your heart.", ref:"Psalm 37:4"},
+  {text:"I have hidden your word in my heart that I might not sin against you.", ref:"Psalm 119:11"},
+  {text:"Greater love has no one than this: to lay down one's life for one's friends.", ref:"John 15:13"},
+  {text:"The name of the Lord is a fortified tower; the righteous run to it and are safe.", ref:"Proverbs 18:10"},
+  {text:"Fear not, for I have redeemed you; I have summoned you by name; you are mine.", ref:"Isaiah 43:1"},
+  {text:"This is the day the Lord has made; let us rejoice and be glad in it.", ref:"Psalm 118:24"},
+  {text:"Your word is a lamp for my feet, a light on my path.", ref:"Psalm 119:105"},
+  {text:"With man this is impossible, but with God all things are possible.", ref:"Matthew 19:26"},
+  {text:"Let everything that has breath praise the Lord. Praise the Lord.", ref:"Psalm 150:6"},
+  {text:"The steadfast love of the Lord never ceases; his mercies never come to an end.", ref:"Lamentations 3:22"},
+  {text:"Seek first his kingdom and his righteousness, and all these things will be given to you as well.", ref:"Matthew 6:33"},
+  {text:"I will praise you, Lord, with all my heart; I will tell of all the marvelous things you have done.", ref:"Psalm 9:1"},
+  {text:"Be still and know that I am God.", ref:"Psalm 46:10"},
+  {text:"The grass withers and the flowers fall, but the word of our God endures forever.", ref:"Isaiah 40:8"},
+  {text:"Taste and see that the Lord is good; blessed is the one who takes refuge in him.", ref:"Psalm 34:8"},
+];
+
+// ══════════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════════
+let currentSection = 'english';
+let songs = [...englishSongs];
+let activeSong = 0;
+let activeMood = 'All';
+let favs = new Set();
+let isPlaying = false;
+
+// Auto-update home screen counts
+document.getElementById('englishCount').textContent = englishSongs.length + ' songs';
+document.getElementById('tamilCount').textContent   = tamilSongs.length + ' songs';
+
+// ══════════════════════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════════════════════
+function openSection(section) {
+  currentSection = section;
+  songs = section === 'english' ? englishSongs : tamilSongs;
+  activeSong = songs[0].id;
+  activeMood = 'All';
+
+  document.getElementById('home-page').style.display = 'none';
+  document.getElementById('songs-page').style.display = 'block';
+
+  const badge = document.getElementById('navBadge');
+  badge.textContent = section === 'english' ? '🎵 English' : '🌺 Tamil';
+  badge.className = 'nav-badge ' + section;
+
+  buildMoods(section);
+  loadDailyVerse();
+  renderSongs();
+  renderLyrics();
+}
+
+function goHome() {
+  stopMusic();
+  document.getElementById('songs-page').style.display  = 'none';
+  document.getElementById('prayer-page').style.display = 'none';
+  document.getElementById('home-page').style.display   = 'flex';
+}
+
+// ══════════════════════════════════════════════════════════════
+// MOOD FILTERS
+// ══════════════════════════════════════════════════════════════
+function buildMoods(section) {
+  const moods = section === 'english'
+    ? ['All','Praise','Worship','Prayer','Christmas']
+    : ['All','Tamil'];
+  const labels = {All:'🌷 All', Praise:'✨ Praise', Worship:'🙏 Worship',
+                  Tamil:'🌺 Tamil', Prayer:'💜 Prayer', Christmas:'🎄 Christmas'};
+  document.getElementById('moodFilters').innerHTML =
+    moods.map(m => `<button class="mood-btn${m==='All'?' active':''}" data-mood="${m}">${labels[m]}</button>`).join('');
+}
+
+document.getElementById('moodFilters').addEventListener('click', e => {
+  const btn = e.target.closest('.mood-btn');
+  if (!btn) return;
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeMood = btn.dataset.mood;
+  renderSongs();
+});
+
+// ══════════════════════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════════════════════
+function getFiltered() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  return songs.filter(s => {
+    const matchMood = activeMood === 'All' || s.tag === activeMood;
+    const matchQ = !q || s.name.toLowerCase().includes(q) || s.artist.toLowerCase().includes(q)
+      || s.verses.some(v => v.text.toLowerCase().includes(q));
+    return matchMood && matchQ;
+  });
+}
+
+function renderSongs() {
+  const list = document.getElementById('songList');
+  const filtered = getFiltered();
+  document.getElementById('noResults').classList.toggle('show', filtered.length === 0);
+  list.innerHTML = filtered.map(s => `
+    <div class="song-card ${s.id===activeSong?'active':''}"
+         onclick="selectSong(${s.id})">
+      <div class="song-emoji" style="background:${s.bg}">${s.emoji}</div>
+      <div class="song-info">
+        <div class="song-name">${s.name}</div>
+        <div class="song-artist">${s.artist}</div>
+      </div>
+      <span class="song-tag" style="${s.tagStyle}">${s.tag}</span>
+    </div>`).join('');
+}
+
+function renderLyrics() {
+  const s = songs.find(x => x.id === activeSong);
+  if (!s) return;
+  document.getElementById('lyricsArt').textContent = s.emoji;
+  document.getElementById('lyricsArt').style.background = s.bg;
+  document.getElementById('lyricsTitle').textContent = s.name;
+  document.getElementById('lyricsSub').textContent   = s.artist + ' · ' + s.tag;
+  document.getElementById('lyricsBody').innerHTML = s.verses.map(v => `
+    <div class="verse-section">
+      <div class="verse-label">${v.label}</div>
+      <div class="verse-text">${v.text}</div>
+    </div>`).join('');
+  const fav = document.getElementById('favBtn');
+  fav.textContent = favs.has(activeSong) ? '❤️ Favourited' : '🤍 Favourite';
+  // 3D tilt on load
+  const panel = document.getElementById('lyricsPanel');
+  panel.style.transform = 'rotateY(-4deg) rotateX(2deg)';
+  setTimeout(() => panel.style.transform = '', 400);
+  // update play btn
+  const playBtn = document.getElementById('playBtn');
+  playBtn.textContent = '▶️ Play Song';
+  playBtn.classList.remove('playing');
+}
+
+function selectSong(id) {
+  stopMusic();
+  activeSong = id;
+  renderSongs();
+  renderLyrics();
+}
+
+// ══════════════════════════════════════════════════════════════
+// SEARCH
+// ══════════════════════════════════════════════════════════════
+document.getElementById('searchInput').addEventListener('input', renderSongs);
+
+// ══════════════════════════════════════════════════════════════
+// COPY
+// ══════════════════════════════════════════════════════════════
+document.getElementById('copyBtn').addEventListener('click', () => {
+  const s = songs.find(x => x.id === activeSong);
+  if (!s) return;
+  const text = s.name + '\n' + s.artist + '\n\n' + s.verses.map(v => v.label + ':\n' + v.text).join('\n\n');
+  navigator.clipboard.writeText(text).catch(() => {});
+  showToast('🌸 Copied to clipboard!');
+});
+
+// ══════════════════════════════════════════════════════════════
+// FAVOURITE
+// ══════════════════════════════════════════════════════════════
+document.getElementById('favBtn').addEventListener('click', () => {
+  if (favs.has(activeSong)) { favs.delete(activeSong); showToast('🤍 Removed from favourites'); }
+  else                      { favs.add(activeSong);    showToast('❤️ Added to favourites!'); }
+  renderLyrics();
+});
+
+// ══════════════════════════════════════════════════════════════
+// SHARE
+// ══════════════════════════════════════════════════════════════
+document.getElementById('shareBtn').addEventListener('click', () => {
+  const s = songs.find(x => x.id === activeSong);
+  if (!s) return;
+  if (navigator.share) {
+    navigator.share({ title: s.name, text: `"${s.name}" by ${s.artist} 🌸✝️` }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(`"${s.name}" by ${s.artist} 🌸✝️`);
+    showToast('💌 Song info copied!');
+  }
+});
+
+// ══════════════════════════════════════════════════════════════
+// MUSIC
+// ══════════════════════════════════════════════════════════════
+document.getElementById('playBtn').addEventListener('click', () => {
+  const s = songs.find(x => x.id === activeSong);
+  const btn = document.getElementById('playBtn');
+  if (!s) return;
+  if (!s.youtube) { showToast('🌸 YouTube link coming soon for this song!'); return; }
+  if (isPlaying) {
+    document.getElementById('yt-player').src = '';
+    btn.textContent = '▶️ Play Song';
+    btn.classList.remove('playing');
+    isPlaying = false;
+  } else {
+    document.getElementById('yt-player').src = `https://www.youtube.com/embed/${s.youtube}?autoplay=1&controls=1`;
+    btn.textContent = '⏸️ Stop Song';
+    btn.classList.add('playing');
+    isPlaying = true;
+    showToast('🎵 Now playing ' + s.name);
+  }
+});
+
+function stopMusic() {
+  document.getElementById('yt-player').src = '';
+  const btn = document.getElementById('playBtn');
+  if (btn) { btn.textContent = '▶️ Play Song'; btn.classList.remove('playing'); }
+  isPlaying = false;
+}
+
+// ══════════════════════════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════════════════════════
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ══════════════════════════════════════════════════════════════
+// 3D TILT ON LYRICS PANEL
+// ══════════════════════════════════════════════════════════════
+const panel = document.getElementById('lyricsPanel');
+panel.addEventListener('mousemove', e => {
+  const r = panel.getBoundingClientRect();
+  const x = (e.clientX - r.left) / r.width - 0.5;
+  const y = (e.clientY - r.top)  / r.height - 0.5;
+  panel.style.transform = `perspective(800px) rotateX(${-y*8}deg) rotateY(${x*8}deg)`;
+});
+panel.addEventListener('mouseleave', () => { panel.style.transform = ''; });
+
+// ══════════════════════════════════════════════════════════════
+// FLORAL CURSOR
+// ══════════════════════════════════════════════════════════════
+const flowerCursor  = document.getElementById('cursor-flower');
+const flowerEmojis  = ['🌸','🌺','🌷','🌹','💮','🌼','🏵️'];
+let lastX = 0, lastY = 0;
+
+document.addEventListener('mousemove', e => {
+  flowerCursor.style.left = e.clientX + 'px';
+  flowerCursor.style.top  = e.clientY + 'px';
+  const dx = e.clientX - lastX, dy = e.clientY - lastY;
+  if (Math.sqrt(dx*dx + dy*dy) > 12) {
+    spawnFlower(e.clientX, e.clientY);
+    lastX = e.clientX; lastY = e.clientY;
+  }
+});
+
+function spawnFlower(x, y) {
+  const count = 2 + Math.floor(Math.random() * 2);
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('div');
+    el.className = 'cursor-petal';
+    el.textContent = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+    const angle = Math.random() * Math.PI * 2;
+    const dist  = 20 + Math.random() * 40;
+    el.style.setProperty('--tx', Math.cos(angle)*dist + 'px');
+    el.style.setProperty('--ty', Math.sin(angle)*dist - 20 + 'px');
+    el.style.setProperty('--tr', (Math.random()*360-180) + 'deg');
+    el.style.left = x + 'px'; el.style.top = y + 'px';
+    el.style.fontSize = (10 + Math.random()*10) + 'px';
+    el.style.animationDuration = (0.6 + Math.random()*0.5) + 's';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1200);
+  }
+}
+
+document.addEventListener('click', e => {
+  flowerCursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
+  setTimeout(() => flowerCursor.style.transform = 'translate(-50%,-50%) scale(1)', 200);
+  for (let i = 0; i < 8; i++) spawnFlower(e.clientX, e.clientY);
+  flowerCursor.textContent = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+});
+
+document.querySelectorAll('button, input, .song-card, .home-card, .mood-btn').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    flowerCursor.style.transform = 'translate(-50%,-50%) scale(1.8)';
+    flowerCursor.style.fontSize = '28px';
+  });
+  el.addEventListener('mouseleave', () => {
+    flowerCursor.style.transform = 'translate(-50%,-50%) scale(1)';
+    flowerCursor.style.fontSize = '22px';
+  });
+});
+
+// ══════════════════════════════════════════════════════════════
+// FALLING PETALS
+// ══════════════════════════════════════════════════════════════
+const petalEmojis = ['🌸','🌺','🌷','🌹','💮','🏵️'];
+const petalContainer = document.getElementById('petals');
+for (let i = 0; i < 18; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+  p.style.left = Math.random() * 100 + 'vw';
+  p.style.fontSize = (12 + Math.random() * 16) + 'px';
+  const dur = 8 + Math.random() * 12;
+  p.style.animationDuration = dur + 's';
+  p.style.animationDelay = (Math.random() * dur) + 's';
+  petalContainer.appendChild(p);
+}
+
+// ══════════════════════════════════════════════════════════════
+// DAILY VERSE (BILINGUAL)
+// ══════════════════════════════════════════════════════════════
+const tamilVerses = [
+  {text:"ஏனெனில் தேவன் தம்முடைய ஒரேபேறான குமாரனை விசுவாசிக்கிறவன் எவனும் கெட்டுப்போகாமல் நித்தியஜீவனை அடையும்படிக்கு, அவரை இவ்வுலகத்தில் அனுப்பினார்.", ref:"யோவான் 3:16"},
+  {text:"என்னைப் பலப்படுத்துகிற கிறிஸ்துவினாலே எல்லாவற்றையும் செய்யக்கூடும்.", ref:"பிலிப்பியர் 4:13"},
+  {text:"கர்த்தர் என் மேய்ப்பர்; எனக்கு குறைவுண்டாகாது.", ref:"சங்கீதம் 23:1"},
+  {text:"உன் சொந்த புத்தியின்மேல் சாயாமல் உன் முழு இருதயத்தோடும் கர்த்தரில் நம்பிக்கையாயிரு.", ref:"நீதிமொழிகள் 3:5"},
+  {text:"பலமாயிரு, திடமனதாயிரு; பயப்படாதே, கலங்காதே; உன் தேவனாகிய கர்த்தர் நீ போகும் இடமெல்லாம் உன்னோடே இருக்கிறார்.", ref:"யோசுவா 1:9"},
+  {text:"உங்களுக்காக நான் நினைத்திருக்கிற நினைவுகளை நான் அறிவேன்; அவை தீமைக்கல்ல நன்மைக்கேதுவான நினைவுகளே; உங்களுக்கு நல்வாழ்வும் நம்பிக்கையும் தரும்.", ref:"எரேமியா 29:11"},
+  {text:"உங்கள் கவலைகள் எல்லாவற்றையும் அவர்மேல் வையுங்கள்; ஏனெனில் அவர் உங்களை விசாரிக்கிறார்.", ref:"1 பேதுரு 5:7"},
+  {text:"தேவனிடத்தில் அன்பாயிருக்கிறவர்களுக்கு, அதாவது அவருடைய தீர்மானத்தின்படி அழைக்கப்பட்டவர்களுக்கு, எல்லாவற்றிலும் நன்மையுண்டாக நடக்கிறதென்று அறிவோம்.", ref:"ரோமர் 8:28"},
+  {text:"உன் தேவனாகிய கர்த்தர் உன் நடுவில் இருக்கிறார்; அவர் வல்லமையுள்ள வீரர்; அவர் உன்னை இரட்சிப்பார்.", ref:"செப்பனியா 3:17"},
+  {text:"கர்த்தருக்கு நன்றி சொல்லுங்கள், அவர் நல்லவர்; அவருடைய கிருபை என்றும் உள்ளது.", ref:"சங்கீதம் 107:1"},
+  {text:"கர்த்தரை நம்பி காத்திருக்கிறவர்கள் புதுப்பலன் பெறுவார்கள்; கழுகுகளைப்போல் செட்டை விரித்துப் பறப்பார்கள்.", ref:"ஏசாயா 40:31"},
+  {text:"இருதயம் நொறுங்குண்டவர்களுக்கு கர்த்தர் சமீபமாயிருக்கிறார்; ஆவியில் நொறுங்குண்டவர்களை அவர் இரட்சிக்கிறார்.", ref:"சங்கீதம் 34:18"},
+  {text:"எந்தக் காரியத்திலும் கவலைப்படாதிருங்கள்; எல்லாவற்றிலும் ஜெபத்தினாலும் விண்ணப்பத்தினாலும் நன்றியுடன் உங்கள் கோரிக்கைகளை தேவனுக்கு தெரியப்படுத்துங்கள்.", ref:"பிலிப்பியர் 4:6"},
+  {text:"அன்பு நீடிய சாந்தமுள்ளது; அன்பு தயவுள்ளது; அன்பு பொறாமைப்படுவதில்லை.", ref:"1 கொரிந்தியர் 13:4"},
+  {text:"இயேசு அவளை நோக்கி: நானே உயிர்த்தெழுதலும் ஜீவனும் ஆயிருக்கிறேன்.", ref:"யோவான் 11:25"},
+  {text:"வருத்தப்பட்டுப் பாரஞ்சுமக்கிறவர்களே, நீங்கள் எல்லாரும் என்னிடத்தில் வாருங்கள்; நான் உங்களுக்கு இளைப்பாறுதல் தருவேன்.", ref:"மத்தேயு 11:28"},
+  {text:"கர்த்தரை மகிழ்ந்து சேவி; உன் இருதயத்தின் விண்ணப்பங்களை அவர் நிறைவேற்றுவார்.", ref:"சங்கீதம் 37:4"},
+  {text:"உமக்கு விரோதமாய் பாவஞ்செய்யாதிருக்கும்பொருட்டு உம்முடைய வசனத்தை என் இருதயத்தில் வைத்திருக்கிறேன்.", ref:"சங்கீதம் 119:11"},
+  {text:"ஒருவன் தன் சிநேகிதருக்காக தன் ஜீவனை ஒப்புக்கொடுப்பதிலும் அதிகமான அன்பு ஒருவருக்கும் இல்லை.", ref:"யோவான் 15:13"},
+  {text:"கர்த்தருடைய நாமம் திடமான அரண்; நீதிமான் அதற்கு ஓடி பாதுகாப்பு அடைவான்.", ref:"நீதிமொழிகள் 18:10"},
+  {text:"பயப்படாதே, நான் உன்னை மீட்டேன்; உன்னை உன் பேரைச்சொல்லி அழைத்தேன்; நீ என்னுடையவன்.", ref:"ஏசாயா 43:1"},
+  {text:"இது கர்த்தர் உண்டாக்கின நாள்; இதில் நாம் களிகூர்ந்து சந்தோஷப்படுவோம்.", ref:"சங்கீதம் 118:24"},
+  {text:"உம்முடைய வசனம் என் கால்களுக்கு தீபமும் என் பாதைக்கு வெளிச்சமுமாயிருக்கிறது.", ref:"சங்கீதம் 119:105"},
+  {text:"மனுஷர்களால் இது கூடாதகாரியம், தேவனால் எல்லாம் கூடும்.", ref:"மத்தேயு 19:26"},
+  {text:"சுவாசமுள்ளதெல்லாம் கர்த்தரைப் புகழட்டும். அல்லேலூயா.", ref:"சங்கீதம் 150:6"},
+  {text:"கர்த்தருடைய கிருபைகள் தீர்ந்துபோவதில்லை; அவருடைய இரக்கங்கள் ஒழிவதில்லை.", ref:"புலம்பல் 3:22"},
+  {text:"முதலில் தேவனுடைய ராஜ்யத்தையும் அவருடைய நீதியையும் தேடுங்கள்; அப்பொழுது இவைகளெல்லாம் உங்களுக்கும் கூடக் கொடுக்கப்படும்.", ref:"மத்தேயு 6:33"},
+  {text:"என் முழு இருதயத்தோடும் கர்த்தரை துதிப்பேன்; உம்முடைய அதிசயமான கிரியைகளை எல்லாம் அறிவிப்பேன்.", ref:"சங்கீதம் 9:1"},
+  {text:"நிறுத்தி தேவன் என்று அறியுங்கள்.", ref:"சங்கீதம் 46:10"},
+  {text:"புல் உலர்ந்து போம், பூ உதிர்ந்துபோம்; நம்முடைய தேவனுடைய வசனமோ என்றென்றும் நிலைத்திருக்கும்.", ref:"ஏசாயா 40:8"},
+  {text:"கர்த்தர் நல்லவர் என்று சுவைத்துப்பாருங்கள்; அவரை நம்புகிறவன் பாக்கியவான்.", ref:"சங்கீதம் 34:8"},
+];
+
+function loadDailyVerse() {
+  const today = new Date();
+  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+  const verse = verses[dayOfYear % verses.length];
+  const tVerse = tamilVerses[dayOfYear % tamilVerses.length];
+  document.getElementById('verseText').textContent = '"' + verse.text + '"';
+  document.getElementById('verseRef').textContent  = '— ' + verse.ref;
+  document.getElementById('verseTamilText').textContent = '"' + tVerse.text + '"';
+  document.getElementById('verseTamilRef').textContent  = '— ' + tVerse.ref;
+  document.getElementById('verseDate').textContent = today.toLocaleDateString('en-IN', {
+    weekday:'long', year:'numeric', month:'long', day:'numeric'
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+// DARK / LIGHT THEME TOGGLE
+// ══════════════════════════════════════════════════════════════
+let isDark = localStorage.getItem('wsDarkMode') === 'true';
+function applyTheme() {
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  document.getElementById('themeToggle').textContent = isDark ? '☀️ Light' : '🌙 Dark';
+}
+function toggleTheme() {
+  isDark = !isDark;
+  localStorage.setItem('wsDarkMode', isDark);
+  applyTheme();
+}
+applyTheme();
+
+// ══════════════════════════════════════════════════════════════
+// PRAYER JOURNAL
+// ══════════════════════════════════════════════════════════════
+let prayers = JSON.parse(localStorage.getItem('wsPrayers') || '[]');
+
+function openPrayer() {
+  document.getElementById('home-page').style.display   = 'none';
+  document.getElementById('songs-page').style.display  = 'none';
+  document.getElementById('prayer-page').style.display = 'block';
+  renderPrayers();
+}
+
+function savePrayer() {
+  const title = document.getElementById('prayerTitle').value.trim();
+  const text  = document.getElementById('prayerText').value.trim();
+  if (!text) { showToast('🌸 Please write something first!'); return; }
+  const entry = {
+    id: Date.now(),
+    title: title || 'My Prayer',
+    text,
+    date: new Date().toLocaleDateString('en-IN', { weekday:'short', year:'numeric', month:'short', day:'numeric' })
+  };
+  prayers.unshift(entry);
+  localStorage.setItem('wsPrayers', JSON.stringify(prayers));
+  document.getElementById('prayerTitle').value = '';
+  document.getElementById('prayerText').value  = '';
+  renderPrayers();
+  showToast('🙏 Prayer saved! He hears you. ✝️');
+}
+
+function deletePrayer(id) {
+  prayers = prayers.filter(p => p.id !== id);
+  localStorage.setItem('wsPrayers', JSON.stringify(prayers));
+  renderPrayers();
+  showToast('🌸 Entry removed');
+}
+
+function renderPrayers() {
+  const list = document.getElementById('prayersList');
+  if (prayers.length === 0) {
+    list.innerHTML = '<div class="prayer-empty">🕊️ Your prayers will appear here...<br><span style="font-size:0.8rem">Start writing above 🌸</span></div>';
+    return;
+  }
+  list.innerHTML = prayers.map(p => `
+    <div class="prayer-entry">
+      <div class="prayer-entry-top">
+        <div class="prayer-entry-title">🙏 ${p.title}</div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="prayer-entry-date">${p.date}</span>
+          <button class="prayer-delete-btn" onclick="deletePrayer(${p.id})">🗑️</button>
+        </div>
+      </div>
+      <div class="prayer-entry-body">${p.text}</div>
+    </div>`).join('');
+}
+
+</script>
+</body>
+</html>
