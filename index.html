@@ -522,6 +522,58 @@
   }
   .home-nav-btn:hover { transform: translateY(-3px) scale(1.05); background: var(--rose); }
 
+  /* ── Floral YouTube Player ── */
+  .yt-floral-wrap {
+    display: none;
+    margin-top: 20px;
+    position: relative; z-index: 1;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #fff0f6, #f5f0ff);
+    border: 2px solid var(--rose2);
+    padding: 14px;
+    box-shadow: 0 8px 28px rgba(232,122,154,0.18);
+    animation: fadeUp 0.4s ease both;
+  }
+  .yt-floral-wrap.active { display: block; }
+  .yt-floral-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .yt-floral-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--rose3);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .yt-floral-petals {
+    font-size: 1rem; letter-spacing: 2px;
+    animation: floatIcon 3s ease-in-out infinite;
+  }
+  .yt-floral-close {
+    background: var(--rose); border: 2px solid var(--rose2);
+    border-radius: 50%; width: 28px; height: 28px;
+    font-size: 0.75rem; cursor: none; font-weight: 700;
+    color: var(--text); display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .yt-floral-close:hover { transform: scale(1.15); background: var(--rose2); }
+  .yt-floral-frame {
+    border-radius: 14px; overflow: hidden;
+    border: 2px solid var(--rose);
+    box-shadow: 0 4px 16px rgba(232,122,154,0.15);
+  }
+  .yt-floral-frame iframe {
+    display: block; width: 100%; height: 200px; border: none;
+  }
+  .yt-floral-footer {
+    text-align: center; margin-top: 8px;
+    font-size: 0.65rem; color: var(--text3); font-style: italic;
+  }
+  [data-theme="dark"] .yt-floral-wrap {
+    background: linear-gradient(135deg, #2a1828, #1e1a30);
+    border-color: var(--rose2);
+  }
+  [data-theme="dark"] .yt-floral-frame { border-color: var(--rose2); }
+
   @keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
   @keyframes fadeUp   { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:translateY(0)} }
 </style>
@@ -535,7 +587,6 @@
 <!-- Theme Toggle -->
 <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙 Dark</button>
 
-
 <!-- ══ HOME PAGE ══ -->
 <div id="home-page">
   <span class="home-icon">🕊️</span>
@@ -547,13 +598,13 @@
       <span class="hc-emoji">🎵</span>
       <div class="hc-title">English Songs</div>
       <div class="hc-sub">Classic & contemporary worship</div>
-      <span class="hc-count" id="englishCount">9 songs</span>
+      <span class="hc-count">9 songs</span>
     </div>
     <div class="home-card tamil" onclick="openSection('tamil')">
       <span class="hc-emoji">🌺</span>
       <div class="hc-title">Tamil Songs</div>
       <div class="hc-sub">தமிழ் கிறிஸ்தவ பாடல்கள்</div>
-      <span class="hc-count" id="tamilCount">6 songs</span>
+      <span class="hc-count">6 songs</span>
     </div>
   </div>
 
@@ -649,9 +700,23 @@
           <button class="action-btn btn-share" id="shareBtn">💌 Share</button>
           <button class="action-btn btn-fav"   id="favBtn">🤍 Favourite</button>
         </div>
-        <div id="yt-player-wrap" style="position:fixed;bottom:-9999px;left:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
-          <iframe id="yt-player" width="1" height="1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+        <!-- Floral YouTube Player -->
+        <div class="yt-floral-wrap" id="yt-player-wrap">
+          <div class="yt-floral-header">
+            <div class="yt-floral-label">
+              <span class="yt-floral-petals">🌸🎵🌸</span>
+              Now Playing
+            </div>
+            <button class="yt-floral-close" onclick="stopMusic()">✕</button>
+          </div>
+          <div class="yt-floral-frame">
+            <iframe id="yt-player" frameborder="0"
+              allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+          <div class="yt-floral-footer">🌷 Praise Him with every note · skip ads above if needed 🌷</div>
         </div>
+      </div>
     </div>
 
   </div>
@@ -748,7 +813,7 @@ const tamilSongs = [
   {
     id:100, name:"வானாதி வானங்கள்", artist:"Sis. Princy Leo Rakesh", tag:"Tamil",
     emoji:"🌸", bg:"#fff0f4", tagStyle:"background:#f7c5d0;color:#7a2a4a;",
-    youtube:"zBg9LBcoR1k",
+    youtube:"",
     verses:[
       {label:"பல்லவி", text:"வானாதி வானங்கள் கொள்ளாதவரே\nவார்த்தையால் வர்ணிக்க கூடாதவரே\nஓயாமல் உம் புகழ் நான் பாடுவேன்\nஇன்றுமே என்றுமே என்றென்றுமே"},
       {label:"அல்லேலூயா", text:"அல்லேலூயா அல்லேலூயா ஆமென்\nஅல்லேலூயா அல்லேலூயா ஆமென்"},
@@ -759,7 +824,7 @@ const tamilSongs = [
   {
     id:101, name:"சிறகுகளின் நிழலில்", artist:"Joseph Aldrin", tag:"Tamil",
     emoji:"🦋", bg:"#f0fff8", tagStyle:"background:#c8edd8;color:#1a5a3a;",
-    youtube:"HX9H-uPjquM",
+    youtube:"",
     verses:[
       {label:"பல்லவி", text:"சிறகுகளின் நிழல்தனிலே நான் நம்பி இளைப்பாறுவேன்\nநீர் துணையாய் இருப்பதனால் நான் என்றும் இளைப்பாறுவேன்"},
       {label:"சரணம் 1", text:"கண்மணி போல என்னை காப்பவரை நான் நம்பி இளைப்பாறுவேன்\nகண் உறங்காமல் காப்பவரை நான் நம்பி இளைப்பாறுவேன்"},
@@ -771,7 +836,7 @@ const tamilSongs = [
   {
     id:102, name:"என்னை அழைத்தவரே", artist:"Davidsam Joyson", tag:"Tamil",
     emoji:"🌷", bg:"#fff5f0", tagStyle:"background:#f7c5d0;color:#7a2a4a;",
-    youtube:"g1xqq4UQsqg",
+    youtube:"",
     verses:[
       {label:"பல்லவி", text:"என்னை அழைத்தவரே என்றும் நடத்துவீரே\nஉங்க கரம் இருக்க பயமில்லையே\nஎந்த பாதையையும் தாண்டிடுவேன்\nஎந்த சூழ்நிலையும் மேற்கொள்ளுவேன்\nஉங்க கரம் இருக்க பயமில்லையே"},
       {label:"சரணம் 1", text:"கருவிலே என்னை கண்டவரே\nபெயர்சொல்லி என்னை அழைத்தவரே\nநன்மைகள் எனக்காய் செய்பவரே\nவழுவாமல் என்னை காத்தவரே\nஇனிமேலும் என்னை காப்பவரே"},
@@ -781,7 +846,7 @@ const tamilSongs = [
   {
     id:103, name:"ஆவியானவர்", artist:"Sam Prasad", tag:"Tamil",
     emoji:"🕊️", bg:"#f0f4ff", tagStyle:"background:#c8edd8;color:#1a5a3a;",
-    youtube:"0msLPjha3ss",
+    youtube:"",
     verses:[
       {label:"பல்லவி", text:"ஆவியானவர் என்னில் இருப்பதால்\nகுறைகள் இல்லையே எல்லாம் நிறைவே\nஞானமும் நிறைவும் ஆலோசணை பெலனும்\nஅறிவையும் தேவபயத்தை தாரும்"},
       {label:"சரணம் 1", text:"வெறுமையான பாத்திரமாய் உந்தனின் ஊழியத்தை\nஎப்படி செய்வேன்\nஎன்னை நிரப்பும் இன்றே\nபயன்படுத்தும் இன்றே\nபயனுள்ள பாத்திரமாக"},
@@ -792,7 +857,7 @@ const tamilSongs = [
   {
     id:104, name:"இனியும் உம்மை கேட்பேன்", artist:"Johnsam Joyson", tag:"Tamil",
     emoji:"🌹", bg:"#fff0f4", tagStyle:"background:#f7c5d0;color:#7a2a4a;",
-    youtube:"nvBqFKgGrcw",
+    youtube:"",
     verses:[
       {label:"பல்லவி", text:"இனியும் உம்மை கேட்பேன்\nநீர் சொல்வதை நான் செய்வேன்\nென் கூட பேசுங்கப்பா\nபேசாம மட்டும் இருக்காதீங்கப்பா"},
       {label:"சரணம் 1", text:"நீர் பேசாவிட்டால் நான் உடைந்து போவேன்\nஉருக்குலைந்து போவேன்\nென் கூட பேசுங்கப்பா\nபேசாம மட்டும் இருக்காதீங்கப்பா"},
@@ -802,7 +867,7 @@ const tamilSongs = [
   {
     id:105, name:"யாக்கோபின் தேவன்", artist:"Johnsam Joyson", tag:"Tamil",
     emoji:"💜", bg:"#f5f0ff", tagStyle:"background:#ddd0f0;color:#4a2a7a;",
-    youtube:"t2hZ93ZrbLM",
+    youtube:"",
     verses:[
       {label:"பல்லவி", text:"யாக்கோபின் தேவன் என் தேவன்\nஎனக்கென்றும் துணை அவரே\nஎந்நாளும் நடத்துவாரே"},
       {label:"சரணம் 1", text:"ஏதுமில்லை என்ற கவலை இல்லை\nதுணையாளர் என்னை விட்டு விலகவில்லை\nசொன்னதை செய்திடும் தகப்பன் அவர்\nநம்புவேன் இறுதி வரை"},
@@ -857,10 +922,6 @@ let activeSong = 0;
 let activeMood = 'All';
 let favs = new Set();
 let isPlaying = false;
-
-// Auto-update home screen counts
-document.getElementById('englishCount').textContent = englishSongs.length + ' songs';
-document.getElementById('tamilCount').textContent   = tamilSongs.length + ' songs';
 
 // ══════════════════════════════════════════════════════════════
 // NAVIGATION
@@ -1021,12 +1082,10 @@ document.getElementById('playBtn').addEventListener('click', () => {
   if (!s) return;
   if (!s.youtube) { showToast('🌸 YouTube link coming soon for this song!'); return; }
   if (isPlaying) {
-    document.getElementById('yt-player').src = '';
-    btn.textContent = '▶️ Play Song';
-    btn.classList.remove('playing');
-    isPlaying = false;
+    stopMusic();
   } else {
     document.getElementById('yt-player').src = `https://www.youtube.com/embed/${s.youtube}?autoplay=1&controls=1`;
+    document.getElementById('yt-player-wrap').classList.add('active');
     btn.textContent = '⏸️ Stop Song';
     btn.classList.add('playing');
     isPlaying = true;
@@ -1036,6 +1095,7 @@ document.getElementById('playBtn').addEventListener('click', () => {
 
 function stopMusic() {
   document.getElementById('yt-player').src = '';
+  document.getElementById('yt-player-wrap').classList.remove('active');
   const btn = document.getElementById('playBtn');
   if (btn) { btn.textContent = '▶️ Play Song'; btn.classList.remove('playing'); }
   isPlaying = false;
