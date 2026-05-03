@@ -598,13 +598,13 @@
       <span class="hc-emoji">🎵</span>
       <div class="hc-title">English Songs</div>
       <div class="hc-sub">Classic & contemporary worship</div>
-      <span class="hc-count">9 songs</span>
+      <span class="hc-count" id="englishCount">0 songs</span>
     </div>
     <div class="home-card tamil" onclick="openSection('tamil')">
       <span class="hc-emoji">🌺</span>
       <div class="hc-title">Tamil Songs</div>
       <div class="hc-sub">தமிழ் கிறிஸ்தவ பாடல்கள்</div>
-      <span class="hc-count">6 songs</span>
+      <span class="hc-count" id="tamilCount">0 songs</span>
     </div>
   </div>
 
@@ -746,12 +746,11 @@ const englishSongs = [
     emoji:"🌟", bg:"#fff8f0", tagStyle:"background:#fde0c8;color:#7a4a20;",
     youtube:"__8EPrWLMwo",
     verses:[
-      {label:"Chorus", text:"Cause when He loves me I feel like I'm floating\nWhen He calls me chosen I feel like somebody with purpose\nHe changed me I’m a new creation\nHe will always be my favorite form of loving"},
-      {label:"Verse 1",  text:"I don’t wanna live the way they do\nlife is so much better cause of You\nEven when I’m feeling bad and bruised\nYou give me strength to make it through"},
-      {label:"Chorus", text:"Cause when He loves me I feel like I'm floating\nWhen He calls me chosen I feel like somebody with purpose\nHe changed me I’m a new creation\nHe will always be my favorite form of loving"},
+      {label:"Chorus", text:"Cause when He loves me I feel like I'm floating\nWhen He calls me chosen I feel like somebody with purpose\nHe changed me I'm a new creation\nHe will always be my favorite form of loving"},
+      {label:"Verse 1",  text:"I don't wanna live the way they do\nlife is so much better cause of You\nEven when I'm feeling bad and bruised\nYou give me strength to make it through"},
+      {label:"Chorus", text:"Cause when He loves me I feel like I'm floating\nWhen He calls me chosen I feel like somebody with purpose\nHe changed me I'm a new creation\nHe will always be my favorite form of loving"},
       {label:"Verse 2", text:"When I trip and stumble through the night\nYou pick me up and hold me tight\nEven when I feel no hope inside\nLord, you bring me back to life"},
-      {label:"Chorus", text:"Cause when He loves me I feel like I'm floating\nWhen He calls me chosen I feel like somebody with purpose\nHe changed me I’m a new creation\nHe will always be my favorite form of loving"},
-
+      {label:"Chorus", text:"Cause when He loves me I feel like I'm floating\nWhen He calls me chosen I feel like somebody with purpose\nHe changed me I'm a new creation\nHe will always be my favorite form of loving"},
     ]
   },
   {
@@ -798,12 +797,12 @@ const englishSongs = [
     emoji:"🙏", bg:"#f0f8ff", tagStyle:"background:#cce8f8;color:#1a4a7a;",
     youtube:"cLsP-36UESk",
     verses:[
-      {label:"Verse 1", text:"The devil thought he had me\nbut Jesus had my soul\nHe’s the one who has control\nSends down an army to stand by my side\nHe lights up the path\nand he shows right from wrong\nAnd he guides me all along\nHe is the way, he’s the truth, he’s the life"},
-      {label:"Chorus",  text:"When I’m walking through darkness\nI know in my heart that\nGod is the name that I know\nThe Lord is my shepherd yeah he’s my defender Yahweh\nHe is great, he is strong, he is mighty\nYeah that’s my God\nI can hear him, he’s talking to me\nhe said praise in the valley\nWith my hands to the heavens, I will rejoice and I’ll sing "},
-      {label:"Verse 2", text:"He leads by still-water when life’s like a wave\nHe’s the one who always saves\nAlways remember put faith over fear (faith over fear)"},
-      {label:"Chorus",  text:"When I’m walking through darkness\nI know in my heart that\nGod is the name that I know\nThe Lord is my shepherd yeah he’s my defender Yahweh\nHe is great, he is strong, he is mighty\nYeah that’s my God\nI can hear him, he’s talking to me\nhe said praise in the valley\nWith my hands to the heavens, I will rejoice and I’ll sing "},
+      {label:"Verse 1", text:"The devil thought he had me\nbut Jesus had my soul\nHe's the one who has control\nSends down an army to stand by my side\nHe lights up the path\nand he shows right from wrong\nAnd he guides me all along\nHe is the way, he's the truth, he's the life"},
+      {label:"Chorus",  text:"When I'm walking through darkness\nI know in my heart that\nGod is the name that I know\nThe Lord is my shepherd yeah he's my defender Yahweh\nHe is great, he is strong, he is mighty\nYeah that's my God\nI can hear him, he's talking to me\nhe said praise in the valley\nWith my hands to the heavens, I will rejoice and I'll sing "},
+      {label:"Verse 2", text:"He leads by still-water when life's like a wave\nHe's the one who always saves\nAlways remember put faith over fear (faith over fear)"},
+      {label:"Chorus",  text:"When I'm walking through darkness\nI know in my heart that\nGod is the name that I know\nThe Lord is my shepherd yeah he's my defender Yahweh\nHe is great, he is strong, he is mighty\nYeah that's my God\nI can hear him, he's talking to me\nhe said praise in the valley\nWith my hands to the heavens, I will rejoice and I'll sing "},
       {label:"Verse 3", text:"Glory, Glory on high you are\nWorthy, now and all time you are\nHoly, God now and forever - 2"},
-      {label:"Chorus",  text:"When I’m walking through darkness\nI know in my heart that\nGod is the name that I know\nThe Lord is my shepherd yeah he’s my defender Yahweh\nHe is great, he is strong, he is mighty\nYeah that’s my God\nI can hear him, he’s talking to me\nhe said praise in the valley\nWith my hands to the heavens, I will rejoice and I’ll sing "},
+      {label:"Chorus",  text:"When I'm walking through darkness\nI know in my heart that\nGod is the name that I know\nThe Lord is my shepherd yeah he's my defender Yahweh\nHe is great, he is strong, he is mighty\nYeah that's my God\nI can hear him, he's talking to me\nhe said praise in the valley\nWith my hands to the heavens, I will rejoice and I'll sing "},
       {label:"Tag",     text:"My defender, my defender\nYahweh - 2"}
     ]
   }
@@ -1314,6 +1313,12 @@ function renderPrayers() {
       <div class="prayer-entry-body">${p.text}</div>
     </div>`).join('');
 }
+
+// ══════════════════════════════════════════════════════════════
+// AUTO-UPDATE SONG COUNTS ON HOME PAGE
+// ══════════════════════════════════════════════════════════════
+document.getElementById('englishCount').textContent = englishSongs.length + ' songs';
+document.getElementById('tamilCount').textContent   = tamilSongs.length + ' songs';
 
 </script>
 </body>
